@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_30a9bdc0055d62f9ed2524dd950dfb80 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_30a9bdc0055d62f9ed2524dd950dfb80" ></div>
+        
+
+<script>
+    // Fonction pour créer une icône emoji
+    function createEmojiIcon(emoji) {
+        return L.divIcon({
+            html: '<div style="font-size: 24px;">' + emoji + '</div>',
+            className: '',
+            iconSize: [30, 42],
+            iconAnchor: [15, 42]
+        });
+    }
+
+    // Marqueurs manuels avec icônes emoji
+    const points = [
+        {
+            coords: [45.4841, 9.2044],
+            popup: "Milano Centrale: Gare monumentale, hall Art Déco",
+            tooltip: "Milano Centrale",
+            emoji: "🚉"
+        },
+        {
+            coords: [45.4847, 9.2056],
+            popup: "Mercato Centrale Milano: Halle gourmande avec spécialités italiennes",
+            tooltip: "Mercato Centrale Milano",
+            emoji: "🍝"
+        },
+        {
+            coords: [45.4849, 9.2071],
+            popup: "Sanctuaire San Camillo de Lellis: Église paisible et colorée",
+            tooltip: "Sanctuaire San Camillo de Lellis",
+            emoji: "⛪"
+        },
+        {
+            coords: [45.4856, 9.1908],
+            popup: "Biblioteca degli Alberi (BAM): Parc moderne entouré de buildings végétalisés",
+            tooltip: "Biblioteca degli Alberi (BAM)",
+            emoji: "🌳"
+        },
+        {
+            coords: [45.4642, 9.1916],
+            popup: "Duomo di Milano: Cathédrale emblématique de Milan",
+            tooltip: "Duomo di Milano",
+            emoji: "🕍"
+        },
+        {
+            coords: [45.4659, 9.1912],
+            popup: "Galleria Vittorio Emanuele II: Galerie commerçante historique et élégante",
+            tooltip: "Galleria Vittorio Emanuele II",
+            emoji: "🛍️"
+        }
+    ];
+
+    var cluster = L.markerClusterGroup();
+    var routeCoords = [];
+
+    points.forEach(function(point) {
+        var marker = L.marker(point.coords, {
+            icon: createEmojiIcon(point.emoji)
+        }).bindPopup(point.popup).bindTooltip(point.tooltip, {sticky: true});
+        cluster.addLayer(marker);
+        routeCoords.push(point.coords);
+    });
+
+    map_30a9bdc0055d62f9ed2524dd950dfb80.addLayer(cluster);
+
+    // Tracer la ligne d’itinéraire
+    var polyline = L.polyline(routeCoords, {
+        color: 'blue',
+        weight: 4,
+        opacity: 0.6,
+        dashArray: '5, 10'
+    }).addTo(map_30a9bdc0055d62f9ed2524dd950dfb80);
+
+    // Activer géolocalisation
+    map_30a9bdc0055d62f9ed2524dd950dfb80.locate({setView: false, maxZoom: 16});
+    map_30a9bdc0055d62f9ed2524dd950dfb80.on('locationfound', function(e) {
+        L.circleMarker(e.latlng, {
+            radius: 8,
+            color: "red"
+        }).addTo(map_30a9bdc0055d62f9ed2524dd950dfb80).bindPopup("📍 Vous êtes ici").openPopup();
+    });
+</script>
+
+</body>
+<script>
+    
+    
+            var map_30a9bdc0055d62f9ed2524dd950dfb80 = L.map(
+                "map_30a9bdc0055d62f9ed2524dd950dfb80",
+                {
+                    center: [45.4841, 9.2044],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a9828fbc116b9fd0ab4188e6575b8e2c = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_30a9bdc0055d62f9ed2524dd950dfb80);
+        
+    
+            var marker_cluster_75a044bf3a4cb2b8a4da3d157220d773 = L.markerClusterGroup(
+                {}
+            );
+            map_30a9bdc0055d62f9ed2524dd950dfb80.addLayer(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+            var marker_e9208b7ec9c2abf9a8195b6286b9c79b = L.marker(
+                [45.4841, 9.2044],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_59180eb5e2f207ca24f6bc475defa50c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d2162a4eb452e1d3ca948a9a5d2f6ee9 = $(`<div id="html_d2162a4eb452e1d3ca948a9a5d2f6ee9" style="width: 100.0%; height: 100.0%;">Milano Centrale: Gare monumentale, hall Art Déco</div>`)[0];
+            popup_59180eb5e2f207ca24f6bc475defa50c.setContent(html_d2162a4eb452e1d3ca948a9a5d2f6ee9);
+        
+
+        marker_e9208b7ec9c2abf9a8195b6286b9c79b.bindPopup(popup_59180eb5e2f207ca24f6bc475defa50c)
+        ;
+
+        
+    
+    
+            marker_e9208b7ec9c2abf9a8195b6286b9c79b.bindTooltip(
+                `<div>
+                     Milano Centrale
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cc58efd4ac985397c0e5b01fa67214af = L.marker(
+                [45.4847, 9.2056],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_8dbd0889c8bc969acaf3cb5503b6fdb3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6250861db50194ef723c9aa40a781954 = $(`<div id="html_6250861db50194ef723c9aa40a781954" style="width: 100.0%; height: 100.0%;">Mercato Centrale Milano: Halle gourmande avec spécialités italiennes</div>`)[0];
+            popup_8dbd0889c8bc969acaf3cb5503b6fdb3.setContent(html_6250861db50194ef723c9aa40a781954);
+        
+
+        marker_cc58efd4ac985397c0e5b01fa67214af.bindPopup(popup_8dbd0889c8bc969acaf3cb5503b6fdb3)
+        ;
+
+        
+    
+    
+            marker_cc58efd4ac985397c0e5b01fa67214af.bindTooltip(
+                `<div>
+                     Mercato Centrale Milano
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_684e85ba721f737e5035f469d58cad38 = L.marker(
+                [45.4849, 9.2071],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_c2a0880ff2b7b5ba722ba2b50e65982f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_383a3037c17ad76d45ab3e0d80401fc2 = $(`<div id="html_383a3037c17ad76d45ab3e0d80401fc2" style="width: 100.0%; height: 100.0%;">Sanctuaire San Camillo de Lellis: Église paisible et colorée</div>`)[0];
+            popup_c2a0880ff2b7b5ba722ba2b50e65982f.setContent(html_383a3037c17ad76d45ab3e0d80401fc2);
+        
+
+        marker_684e85ba721f737e5035f469d58cad38.bindPopup(popup_c2a0880ff2b7b5ba722ba2b50e65982f)
+        ;
+
+        
+    
+    
+            marker_684e85ba721f737e5035f469d58cad38.bindTooltip(
+                `<div>
+                     Sanctuaire San Camillo de Lellis
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_955309c93f79b419c3433bc41fb32fa8 = L.marker(
+                [45.4856, 9.1908],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_961563ab41961f1579438fb2bca8951d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4b77f0eb9ffcabe28feb5be50d7b54b6 = $(`<div id="html_4b77f0eb9ffcabe28feb5be50d7b54b6" style="width: 100.0%; height: 100.0%;">Biblioteca degli Alberi (BAM): Parc moderne entouré de buildings végétalisés</div>`)[0];
+            popup_961563ab41961f1579438fb2bca8951d.setContent(html_4b77f0eb9ffcabe28feb5be50d7b54b6);
+        
+
+        marker_955309c93f79b419c3433bc41fb32fa8.bindPopup(popup_961563ab41961f1579438fb2bca8951d)
+        ;
+
+        
+    
+    
+            marker_955309c93f79b419c3433bc41fb32fa8.bindTooltip(
+                `<div>
+                     Biblioteca degli Alberi (BAM)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6cfce4a62c48e6a1490a178b49932900 = L.marker(
+                [45.4642, 9.1916],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_31db716ff2f324ededdec4617ec9b43f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_27f867e23a87faa0a9bf87cf028eebee = $(`<div id="html_27f867e23a87faa0a9bf87cf028eebee" style="width: 100.0%; height: 100.0%;">Duomo di Milano: Cathédrale emblématique de Milan</div>`)[0];
+            popup_31db716ff2f324ededdec4617ec9b43f.setContent(html_27f867e23a87faa0a9bf87cf028eebee);
+        
+
+        marker_6cfce4a62c48e6a1490a178b49932900.bindPopup(popup_31db716ff2f324ededdec4617ec9b43f)
+        ;
+
+        
+    
+    
+            marker_6cfce4a62c48e6a1490a178b49932900.bindTooltip(
+                `<div>
+                     Duomo di Milano
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7cca8cce345ad01b7b072fd4f936fd04 = L.marker(
+                [45.4659, 9.1912],
+                {}
+            ).addTo(marker_cluster_75a044bf3a4cb2b8a4da3d157220d773);
+        
+    
+        var popup_70943ae81ab4c7c701627485dded3d4e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8008b79c8b898ef32a2a75976a64f6cb = $(`<div id="html_8008b79c8b898ef32a2a75976a64f6cb" style="width: 100.0%; height: 100.0%;">Galleria Vittorio Emanuele II: Galerie commerçante historique et élégante</div>`)[0];
+            popup_70943ae81ab4c7c701627485dded3d4e.setContent(html_8008b79c8b898ef32a2a75976a64f6cb);
+        
+
+        marker_7cca8cce345ad01b7b072fd4f936fd04.bindPopup(popup_70943ae81ab4c7c701627485dded3d4e)
+        ;
+
+        
+    
+    
+            marker_7cca8cce345ad01b7b072fd4f936fd04.bindTooltip(
+                `<div>
+                     Galleria Vittorio Emanuele II
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
