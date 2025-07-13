@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Dolce Milano Express</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
+    #legend {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: sans-serif;
+      font-size: 14px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="legend">
+  <b>🗺️ Parcours Dolce Milano Express</b>
+  <ol>
+    <li>🚉 Milano Centrale</li>
+    <li>🍝 Mercato Centrale</li>
+    <li>⛪ San Camillo</li>
+    <li>🌳 BAM</li>
+    <li>🕍 Duomo</li>
+    <li>🛍️ Galleria Vittorio Emanuele II</li>
+  </ol>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([45.476, 9.198], 14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const points = [
+    {coords: [45.4841, 9.2044], label: "Milano Centrale", popup: "🚉 Milano Centrale: Gare monumentale"},
+    {coords: [45.4847, 9.2056], label: "Mercato Centrale", popup: "🍝 Halle gourmande italienne"},
+    {coords: [45.4849, 9.2071], label: "San Camillo", popup: "⛪ Église paisible et colorée"},
+    {coords: [45.4856, 9.1908], label: "BAM", popup: "🌳 Parc végétalisé"},
+    {coords: [45.4642, 9.1916], label: "Duomo", popup: "🕍 Cathédrale emblématique"},
+    {coords: [45.4659, 9.1912], label: "Galleria Vittorio", popup: "🛍️ Galerie historique"}
+  ];
+
+  const coordsList = [];
+
+  points.forEach(p => {
+    const icon = L.divIcon({
+      html: `<div style="font-size: 24px;">${p.popup[0]}</div>`,
+      className: '',
+      iconSize: [30, 42],
+      iconAnchor: [15, 42]
+    });
+    L.marker(p.coords, {icon}).addTo(map)
+      .bindPopup(p.popup)
+      .bindTooltip(p.label, {permanent: false});
+    coordsList.push(p.coords);
+  });
+
+  L.polyline(coordsList, {
+    color: 'blue',
+    weight: 4,
+    opacity: 0.6,
+    dashArray: '6, 6'
+  }).addTo(map);
+
+  // Géolocalisation
+  map.locate({setView: false, maxZoom: 16});
+  map.on('locationfound', e => {
+    L.circleMarker(e.latlng, {
+      radius: 8,
+      color: 'red'
+    }).addTo(map).bindPopup("📍 Vous êtes ici").openPopup();
+  });
+</script>
+
+<hr style="margin-top: 40px;">
+<h2 style="text-align:center;">📄 Guide PDF du Parcours</h2>
+
+<iframe src="Parcours_Dolce_Milano_Express.pdf" width="100%" height="600px" style="border:1px solid #ccc; margin-top:10px;">
+  Ce navigateur ne supporte pas l'affichage PDF. <a href="Parcours_Dolce_Milano_Express.pdf">Téléchargez le PDF</a>.
+</iframe>
+
+<p style="text-align:center; margin-top: 20px;">
+  <a href="Parcours_Dolce_Milano_Express.pdf" download style="font-size:18px; padding:10px 20px; background:#2c3e50; color:white; text-decoration:none; border-radius:5px;">
+    📥 Télécharger le guide PDF
+  </a>
+</p>
+
+</body>
+</html>
